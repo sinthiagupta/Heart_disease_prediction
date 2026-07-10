@@ -22,8 +22,6 @@ st_slope= st.selectbox("ST Slope", ["Up", "Flat", "Down"])
 
 if st.button("Predict"):
 
-    st.write("✅ Step 1: Button clicked")
-
     raw_input = {
         'Age': age,
         'RestingBP': resting_bp,
@@ -38,8 +36,6 @@ if st.button("Predict"):
         'ST_Slope_' + st_slope: 1
     }
 
-    st.write("✅ Step 2: Dictionary created")
-
     input_df = pd.DataFrame([raw_input])
 
     for col in expected_columns:
@@ -48,16 +44,9 @@ if st.button("Predict"):
 
     input_df = input_df[expected_columns]
 
-    st.write("✅ Step 3: DataFrame ready")
-    st.write(input_df)
-
     scaled_input = scaler.transform(input_df)
 
-    st.write("✅ Step 4: Scaling successful")
-
     prediction = model.predict(scaled_input)[0]
-
-    st.write("✅ Step 5: Prediction successful")
     st.write("Prediction:", prediction)
 
     if prediction == 1:
