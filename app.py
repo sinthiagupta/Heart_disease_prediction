@@ -21,31 +21,46 @@ oldpeak=st.slider("Oldpeak (ST Depression)", 0.0,6.0,1.0)
 st_slope= st.selectbox("ST Slope", ["Up", "Flat", "Down"])
 
 if st.button("Predict"):
-    raw_input={
+
+    st.write("✅ Step 1: Button clicked")
+
+    raw_input = {
         'Age': age,
         'RestingBP': resting_bp,
         'Cholesterol': cholesterol,
         'FastingBS': fasting_bs,
         'MaxHR': max_hr,
         'Oldpeak': oldpeak,
-        'Sex_' +sex: 1,
+        'Sex_' + sex: 1,
         'ChestPainType_' + chest_pain: 1,
         'RestingECG_' + resting_ecg: 1,
         'ExerciseAngina_' + exercise_angina: 1,
         'ST_Slope_' + st_slope: 1
     }
 
-    input_df=pd.DataFrame([raw_input])
+    st.write("✅ Step 2: Dictionary created")
+
+    input_df = pd.DataFrame([raw_input])
 
     for col in expected_columns:
         if col not in input_df.columns:
-            input_df[col]=0
+            input_df[col] = 0
 
-    input_df=input_df[expected_columns]
-    scaled_input=scaler.transform(input_df)
-    prediction =model.predict(scaled_input)[0]
+    input_df = input_df[expected_columns]
 
-    if prediction ==1:
+    st.write("✅ Step 3: DataFrame ready")
+    st.write(input_df)
+
+    scaled_input = scaler.transform(input_df)
+
+    st.write("✅ Step 4: Scaling successful")
+
+    prediction = model.predict(scaled_input)[0]
+
+    st.write("✅ Step 5: Prediction successful")
+    st.write("Prediction:", prediction)
+
+    if prediction == 1:
         st.error("High Risk of Heart Disease")
     else:
         st.success("Low Risk of Heart Disease")
